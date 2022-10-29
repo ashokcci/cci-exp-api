@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="s3-test-test-suite.xml" />
+	<flow name="s3-test-test-suiteFlow" doc:id="2a6eed90-e443-48d3-8e39-7ac29a27edf0" >
+		<munit-tools:spy doc:name="Spy" doc:id="b48ce9db-6ac9-4e0a-afe0-f53b29056086" processor="foreach">
+			<munit-tools:with-attributes >
+				<munit-tools:with-attribute whereValue="For Each" attributeName="doc:name" />
+				<munit-tools:with-attribute whereValue="For Each" attributeName="doc:name" />
+				<munit-tools:with-attribute whereValue="For Each" attributeName="doc:name" />
+				<munit-tools:with-attribute whereValue="For Each" attributeName="doc:name" />
+				<munit-tools:with-attribute whereValue="For Each" attributeName="doc:name" />
+			</munit-tools:with-attributes>
+			<munit-tools:before-call >
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="1158df59-0378-49b8-a145-6914f3a36146" />
+			</munit-tools:before-call>
+			<munit-tools:after-call >
+				<munit-tools:assert-equals doc:name="Assert equals" doc:id="4c2a0767-2f5b-44e3-b938-46686994ffe9" />
+			</munit-tools:after-call>
+		</munit-tools:spy>
+	</flow>
+	<munit:test name="s3-test-test-suite-s3-testFlowTest" doc:id="d7672b9f-97d3-4608-b28f-779c900ddbd0" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to s3-testFlow" doc:id="29b694b4-f679-4bee-b2e4-b63f5f428361" name="s3-testFlow"/>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

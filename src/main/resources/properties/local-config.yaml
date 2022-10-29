@@ -1,0 +1,21 @@
+aws:
+  accessKey: "AKIAZB7ECQ26H5UQHZOA"
+  secretKey: "![FxAbOOI9sRYA8KG+UPlp5p+hHzuKrpODC9HfVwFbnQ+1gekTIFia8Y7FR8IeYQAL]"
+  region: "us-east-1"
+  s3prefix: "sf-cdp-poc/SF_CDP_DATA/"
+  bucketName: "sf-cdp-poc"
+  s3:
+    maxRetries: "3"
+    interval: "3000"
+  
+sfdc:
+  username: "munish.dadwal@mulesoft.com.ihg.lc"
+  password: "![fQEiwt1eKxXDwrByBVgf0w==]"
+  securityToken: "![6013zeAR7y6ePpFQLDCesmyclFzcPBBBztaNnVj03lo=]"
+  url: "https://ihgcrm--lc.my.salesforce.com/services/Soap/u/43.0"
+  member:
+    id: "0123i000000E6pAAAS"
+    
+csv:
+  line:
+    ending: "LF"    

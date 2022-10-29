@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="f8311b76-ee76-4ccd-9645-9a05b8561edb" >
+		<salesforce:basic-connection password="${secure::sfdc.password}" securityToken="${secure::sfdc.securityToken}" username="munish.dadwal@mulesoft.com.ihg.lc" url="https://ihgcrm--lc.my.salesforce.com/services/Soap/u/43.0"/>
+	</salesforce:sfdc-config>
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="9dab9264-cea6-411e-8344-0e73327d83f4" file="properties/${mule.env}-config.yaml" key="${secureKey}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="d5d291d5-24ed-4566-ab6a-b5b6760ab31c" >
+		<file:connection workingDir="C:\Users\ITCae\Downloads" />
+	</file:config>
+	<global-property doc:name="Global Property" doc:id="dc787a13-6ad0-43ff-9556-14a980c463d7" name="mule.env" value="local" />
+	<flow name="s3-testFlow" doc:id="6bf17857-acdb-4d54-9073-1cf5a8993184" >
+		<scheduler doc:name="Scheduler" doc:id="04a15b74-2dec-480d-835d-02714efc91cb" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="DAYS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<set-payload value='MEMBERSHIP_ID,ENTERPRISE_ID,DGST_MSTR_KEY,ENROLL_DT,ENROLL_SRC_LOC_CD,MBRSHP_STAT_CD,MBRSHP_STAT_RSN_CD,MBRSHP_LVL_CD,MBRSHP_LVL_RSN_CD,TIER_LVL_EXPR_DT,TIER_LVL_LFTM_IND,CURRENT_BAL_UNIT_AMT,PT_BAL_EXPR_DT,EXPIRED_PT_BAL_AMT,EXPIRED_PT_BAL_EXPUNGE_DT,LST_ACTV_DT,LFTM_EARNED_UNIT_AMT,LFTM_EARNED_STY_UNIT_AMT,LFTM_REDEEMED_UNIT_AMT,MARITAL_STAT_CD,BIRTH_DT,GENDER_CD,PREF_LANG_SPOKEN_CD,PREF_LANG_WRITTEN_CD,RESIDENCE_CTRY_CD,RESIDENCE_CTRY_DESC,STATE_DESC,IHG_CURRENT_RGN_CD,IHG_CURRENT_SUBRGN_CD,IHG_CURRENT_RGN_DESC,IHG_CURRENT_SUBRGN_DESC,FRST_NM,MDL_NM,LST_NM,ADDR_LN_1_TXT,ADDR_LN_2_TXT,ADDR_LN_3_TXT,ADDR_LN_4_TXT,ADDR_LN_5_TXT,CITY_NM,STATE_CD,POST_CD,GOOD_ADDR_IND,ADDR_CONTACT_USAGE_CD,EMAIL_ID,GOOD_EMAIL_IND,PHONE_NBR,ICC_NBR,AMB_LVL_CD,AMB_STAT_CD,AMB_EXPR_DT,AMB_ORIG_ENROLL_DT,AMB_CURR_ENROLL_DT,KAR_LVL_CD,KAR_STAT_CD,KIC_EXPR_DT,KAR_ENROLL_DT,BR_STAT_CD,BR_ENROLL_DT,BR_CONSENT_SIGN_IND,EARNING_PREF_ALLI_CD,EARNING_PREF_ALLI_DESC,CORP_NBR_TXT,COMPANY_NM,EOffers_opt_in,Estatement_opt_in,Partner_opt_in,Survey_opt_in,Credit_Card_opt_in,SMS_RC_opt_in,SMS_PRP_opt_in,Karma_eoffers_opt_in,Karma_BN_opt_in,Karma_LMD_opt_in,CHASE_CARD,LASER_CARD,CITIC_CARD,TRI_PARTY_CARD,WECHAT_ID,MOBILE_APP,EMP_RATE_ELIG_IND,EMP_MBRSHP_ID,OFFER_TRMT_ID,PGM_ENROLL_INTG,ENROLL_CHANNEL,BR_ENROLL_CHANNEL,BR_ENROLL_LOC,BR_ENROLL_TYPE,ENROLL_HTL_CHAIN,ENROLL_HTL_CTRY,ENROLL_HTL_RGN_CD,ENROLL_HTL_SUBRGN_CD,LD_UPDT_TS,RESIDENCE_LAT,RESIDENCE_LONG,ENCR_MBRSHP_ID,MBR_STAY_LST_36_MTHS_FLG,MBR_FUTURE_BKG_PRSNT_FLG&#10;163927878,557008474,538642335,2004-04-27,QMPCH,O,,CLUB,,,,1195237.000000000,2023-08-03,,,2022-08-03,1456737.000000000,35122.000000000,261500.000000000,,1904-12-08,F,en,en,MO,MACAU,,GCHINA,MACAU,GREATER CHINA,MACAU,I Fong Fonnie,*,Lau,No 52-58,Avenida do Coronel Mesquita,"""Cerese"" Block 2, 3/N",,,MACAU,,853,Y,H,fonnie68@yahoo.com.hk,Y,85366620810,,,,,,,,,,,,,,HPC,,,,Y,Y,Y,Y,Y,N,N,N,N,N,N,N,N,N,ov_Pr1NPDuXA2Tf8DexaiMQiSpIY,iPhone,Y,381538017,HOTEL,,INN,,,,HI,MACAU,GCHINA,MACAU,2022-08-26 12:54:39.082166+00:00,,,eyJlbmMiOiJBMTI4R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.QCGapsNtRbgLu26S1JwbTyrNbCaSLE4-XAt1IAN6Hos94ssBIToEy6BQqmCNlOY5Iu59sBdeEoGzCoNvu8w4Yg.A_GRd5Y0H0AEJTNU.JTI2kh_ICvRTFnjNMktyK7aZJ_mRX7NJ.hXxBc14YCEekbH3FqoVabg,Y,N' doc:name="Set Payload" doc:id="5d331d22-efe2-4460-8370-2308d7cd802f" mimeType='text/csv; escape="\"\""' encoding="UTF-8"/>
+		<logger level="INFO" doc:name="Logger" doc:id="27844610-6069-4a49-88ed-dd932fc58073" message='#[output json --- "file data" : payload]'/>
+		<foreach doc:name="For Each" doc:id="ac6d095b-4ec9-4615-ba9a-886fa08fbfdf" collection='#[%dw 2.0&#10;output application/csv separator="|~" , escape = "\"" , quoteValues = true&#10;import * from dw::Runtime&#10;import * from dw::core::Strings&#10;---&#10;payload]'>
+			<flow-ref doc:name="Flow Reference" doc:id="fce038d8-808a-4289-9110-19e36722ab1b" name="s3-testFlow1"/>
+		</foreach>
+		<logger level="INFO" doc:name="Logger" doc:id="a0650290-28bd-4e13-ad14-705622016727" message='#[output json --- "Last output" : payload]'/>
+	</flow>
+	<sub-flow name="s3-testFlow1" doc:id="b2fc8db1-bf91-486f-ba0b-6a5607616a1e" >
+		<scatter-gather doc:name="Scatter-Gather" doc:id="db340de9-3dcc-4c5c-962d-c0ae2f9bc245">
+			<route>
+				<ee:transform doc:name="Transform Message" doc:id="76712d76-f9f4-4c47-9f90-560a5d3ebadb">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/csv separator="," , escape = "\"" , quoteValues = true
+import * from dw::Runtime
+import * from dw::core::Strings
+
+var lookupValues = {
+    "Y": true,
+    "N": false
+}
+
+fun replacePipe(str) = if(str is String)
+	(str replace '"' with '')  else str
+
+fun guard (fn) = dw::Runtime::try(fn) match {
+  case tr if (tr.success) -> replacePipe(tr.result)
+  else -> null // error message to be shown on success: "false"
+}
+
+var regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+---
+payload map ((item,index) ->{
+  "ADDR_LN_2_TXT__c": guard(() -> item.ADDR_LN_2_TXT replace("'") with  ("\'")),
+  "ADDR_LN_3_TXT__c": guard(() -> item."ADDR_LN_3_TXT" replace("'") with  ("\'")),
+  "ADDR_LN_4_TXT__c": guard(() -> item."ADDR_LN_4_TXT" replace("'") with  ("\'")),
+  "ADDR_LN_5_TXT__c": guard(() -> item.ADDR_LN_5 replace("'") with  ("\'")),
+  "AMB_CURR_ENROLL_DT__c": using(tryOutput = try(() -> item.AMB_CURR_ENROLL_DT as Date))
+    if(tryOutput.success) tryOutput.result else null,
+  "AMB_EXPR_DT__c": using(tryOutput = try(() -> item.AMB_EXPR_DT as Date))
+    if(tryOutput.success) tryOutput.result else null ,
+  "AMB_LVL_CD__c": guard(() -> item."AMB_LVL_CD" replace("'") with  ("\'")),
+  "AMB_ORIG_ENROLL_DT__c": using(tryOutput = try(() -> item."AMB_ORIG_ENROLL_DT" as Date))
+    if(tryOutput.success) tryOutput.result else null ,
+  "AMB_STAT_CD__c": guard(() -> item."AMB_STAT_CD" replace("'") with  ("\'")),
+  "BR_CONSENT_SIGN_IND__c": guard(() -> ((item."BR_CONSENT_SIGN_IND"[0]) replace("'") with  ("\'")) replace '"' with '' ),
+  "BR_ENROLL_CHANNEL__c": using(tryOutput = try(() -> (item."BR_ENROLL_CHANNEL" replace("'") with  ("\'")) replace '"' with '' ))
+    if(tryOutput.success) (item."BR_ENROLL_CHANNEL" replace("'") with  ("")) replace '"' with '' else null,
+  "BR_ENROLL_DT__c": guard(() -> item."BR_ENROLL_DT" as Date),
+  "BR_ENROLL_LOC__c": 12,
+  "BR_ENROLL_TYPE__c": 13,
+  "BR_STAT_CD__c": 14,
+  "Email": if((item."EMAIL_ID" default '') matches regexEmail)
+		item."EMAIL_ID" else null,
+  "ENROLL_CHANNEL__c": using(tryOutput = try(() -> (item."ENROLL_CHANNEL" replace("'") with  ("\'")) replace '"' with '' ))
+    if(tryOutput.success) (item."ENROLL_CHANNEL" replace("'") with  ("")) replace '"' with '' else null,
+  "ENROLL_DT__c": guard(() -> item."ENROLL_DT" as Date),
+  "ENROLL_HTL_CHAIN__c": guard(() -> item."ENROLL_HTL_CHAIN" replace("'") with  ("\'")),
+  "ENROLL_HTL_CTRY__c": guard(() -> item."ENROLL_HTL_CTRY" replace("'") with  ("\'")),
+  "ENROLL_HTL_RGN_CD__c": guard(() -> item."ENROLL_HTL_RGN_CD" replace("'") with  ("\'")),
+  "ENROLL_HTL_SUBRGN_CD__c": guard(() -> item."ENROLL_HTL_SUBRGN_CD" replace("'") with  ("\'")),
+  "ENROLL_SRC_LOC_CD__c": guard(() -> item."ENROLL_SRC_LOC_CD" replace("'") with  ("\'")),
+  "FirstName": guard(() -> item."FRST_NM" replace("'") with  ("\'")),
+  "ICC_NBR__c": guard(() -> item."ICC_NBR" replace("'") with  ("\'")),
+  "IHG_CURRENT_RGN_CD__c": guard(() -> (item."IHG_CURRENT_RGN_CD" replace("'") with  ("\'")) replace '"' with '' ),
+  "IHG_CURRENT_RGN_DESC__c": guard(() -> (item."IHG_CURRENT_RGN_DESC" replace("'") with  ("\'")) replace '"' with '' ),
+  "IHG_CURRENT_SUBRGN_CD__c": guard(() -> (item."IHG_CURRENT_SUBRGN_CD" replace("'") with  ("\'")) replace '"' with '' ),
+  "IHG_CURRENT_SUBRGN_DESC__c": item."IHG_CURRENT_SUBRGN_DESC",
+  "KAR_ENROLL_DT__c": using(tryOutput = try(() -> item."KAR_ENROLL_DT" as Date))
+    if(tryOutput.success) tryOutput.result else null,
+  "eoffers_opt_in__c": item."eoffers_opt_in",
+  "KAR_LVL_CD__c": guard(() -> item."KAR_LVL_CD" replace("'") with  ("\'")),
+  "KAR_STAT_CD__c": guard(() -> item."KAR_STAT_CD" replace("'") with  ("\'")),
+  "KIC_EXPR_DT__c": item."KIC_EXPR_DT",
+  "LastName": guard(() -> item."LST_NM" replace("'") with  ("\'")),
+  "MailingCity": guard(() -> item."CITY_NM" replace("'") with  ("\'")),
+  "MailingPostalCode": guard(() -> item."POST_CD" replace("'") with  ("\'")),
+  "MailingState":  guard(() -> item."STATE_CD" replace("'") with  ("\'")),
+  "MailingStreet": guard(() -> item."ADDR_LN_1_TXT" replace("'") with  ("\'")),
+  MailingCountry: guard(() -> item."RESIDENCE_CTRY_CD" replace("'") with  ("\'")),
+  "MBRSHP_LVL_CD__c": guard(() -> (item."MBRSHP_LVL_CD" replace("'") with  ("\'")) replace '"' with '' ),
+  "MBRSHP_LVL_RSN_CD__c": guard(() -> item."MBRSHP_LVL_RSN_CD"),
+  "MBRSHP_STAT_CD__c": guard(() -> (item."MBRSHP_STAT_CD" replace("'") with  ("\'")) replace '"' with ''  ),
+  "MBRSHP_STAT_RSN_CD__c": guard(() -> (item."MBRSHP_STAT_RSN_CD" replace("'") with  ("\'")) replace '"' with ''  ),
+  "MiddleName": if(item."MDL_NM" != "*") item."MDL_NM"  else null,
+  "PGM_ENROLL_INTG__c": item."PGM_ENROLL_INTG" replace("'") with  ("\'"),
+  "Phone": item."PHONE_NBR",
+  "PREF_LANG_SPOKEN_CD__c": guard(() -> (item."PREF_LANG_SPOKEN_CD" replace("'") with  ("\'")) replace '"' with ''  ),
+  "PREF_LANG_WRITTEN_CD__c": guard(() -> (item."PREF_LANG_WRITTEN_CD" replace("'") with  ("\'")) replace '"' with '' ),
+  "RESIDENCE_CTRY_CD__c": guard(() -> item."RESIDENCE_CTRY_CD" replace("'") with  ("\'")),
+  "RESIDENCE_CTRY_DESC__c": guard(() -> item."RESIDENCE_CTRY_DESC" replace("'") with  ("\'")),
+  "Rewards_Number__c": if(isNumeric(item."MEMBERSHIP_ID")) item."MEMBERSHIP_ID" else null ,
+  Future_Booking_Indicator__c: if(item."MBR_FUTURE_BKG_PRSNT_FLGS" != null) (item."MBR_FUTURE_BKG_PRSNT_FLGS" as Boolean) else null ,
+  "STATE_DESC__c": guard(() -> item."STATE_DESC" replace("'") with  ("\'")),
+  "TIER_LVL_EXPR_DT__c": using(tryOutput = try(() -> item."TIER_LVL_EXPR_DT" as Date))
+    if(tryOutput.success) tryOutput.result else null,
+  "TIER_LVL_LFTM_IND__c": guard(() -> item."TIER_LVL_LFTM_IND" replace("'") with  ("\'")),
+  //RecordTypeId: p('sfdc.member.id'),
+  Stay_Last_36_Months__c: if(item.MBR_STAY_LST_36_MTHS_FLG != null)
+  	lookupValues[item.MBR_STAY_LST_36_MTHS_FLG] else null,
+  IsSFMCVisible__c: true,
+  Activity_Last_36_Months__c: guard(() -> if (daysBetween(item."LST_ACTV_DT" as Date, now()) <= 1095) true else false),
+  CMM_lst_actv_dt__c: guard(() -> item."LST_ACTV_DT" as Date)
+})]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="c9d9718f-e65f-41a1-a887-cc30f92fe7a4" message='#[output json --- "first mapping" : payload]'/>
+			</route>
+			<route>
+				<ee:transform doc:name="Transform Message" doc:id="abd2bbe1-c1e4-44ab-a090-da3962bbe3e1">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+import * from dw::core::Strings
+import * from dw::Runtime
+
+output application/csv separator="|~" , escape = "\"" , quoteValues = true
+fun strCheck(str: String) = if(isEmpty(str))
+	false else if(isAlpha(str))
+	false else true
+
+fun replacePipe(str) = if(str is String)
+	str replace("|") with ' ' else str
+
+---
+payload map((item,index)-> {
+
+	Enterprise_Id__c: replacePipe(item."ENTERPRISE_ID" default ''),
+	"addr_contact_usage_cd__c": replacePipe(item."ADDR_CONTACT_USAGE_CD" default ''),
+	good_email_ind__c: replacePipe(item."GOOD_EMAIL_IND" default ''),
+	"birth_dt__c": using(tryOutput = try(() -> item."BIRTH_DT" as Date))
+		if(tryOutput.success) tryOutput.result else null ,
+	gender_cd__c: replacePipe(item."GENDER_CD" default ''),
+	good_addr_ind__c: replacePipe(item."GOOD_ADDR_IND" default ''),
+	"chase_card__c": replacePipe(item."CHASE_CARD" default ''),
+	laser_card__c: replacePipe(item."LASER_CARD" default ''),
+	"citic_card__c": replacePipe(item."CITIC_CARD" default ''),
+	tri_party_card__c: replacePipe(item."TRI_PARTY_CARD" default ''),
+	wechat_id__c: replacePipe(item."WECHAT_ID" default ''),
+	offer_trmt_id__c: replacePipe(item."OFFER_TRMT_ID" default ''),
+	residence_long__c: using(tryOutput = try(() -> item."RESIDENCE_LONG" as Number))
+		if(tryOutput.success)tryOutput.result else null ,
+	residence_lat__c: using(tryOutput = try(() -> item."RESIDENCE_LAT" as Number))
+		if(tryOutput.success)tryOutput.result else null  ,
+	"company_nm__c": replacePipe(item."company_nm" default ''),
+	estatement_opt_in__c: replacePipe(item."Estatement_opt_in" default ''),
+	partner_opt_in__c: replacePipe(item."Partner_opt_in" default ''),
+	survey_opt_in__c: replacePipe(item."Survey_opt_in" default ''),
+	"corp_nbr_txt__c": replacePipe(item."corp_nbr_txt" default ''),
+	"credit_card_opt_in__c": replacePipe(item."Credit_Card_opt_in" default ''),
+	sms_rc_opt_in__c: replacePipe(item."SMS_RC_opt_in" default ''),
+	sms_prp_opt_in__c: replacePipe(item."SMS_PRP_opt_in" default ''),
+	karma_eoffers_opt_in__c: replacePipe(item."Karma_eoffers_opt_in" default ''),
+	eoffers_opt_in__c: replacePipe(item.EOffers_opt_in default '') ,
+	karma_bn_opt_in__c: replacePipe(item."Karma_BN_opt_in" default ''),
+	karma_lmd_opt_in__c: replacePipe(item."Karma_LMD_opt_in" default ''),
+	mobile_app__c: replacePipe(item."MOBILE_APP" default ''),
+	"current_bal_unit_amt__c": replacePipe(item."CURRENT_BAL_UNIT_AMT" default ''),
+	pt_bal_expr_dt__c: using(tryOutput = try(() -> item."PT_BAL_EXPR_DT" as Date))
+		if(tryOutput.success)tryOutput.result else null,
+	expired_pt_bal_expunge_dt__c: item."EXPIRED_PT_BAL_EXPUNGE_DT",
+	lst_actv_dt__c: using(tryOutput = try(() -> item."LST_ACTV_DT" as Date))
+		if(tryOutput.success)tryOutput.result else null,
+	lftm_earned_unit_amt__c: replacePipe(item."LFTM_EARNED_UNIT_AMT" default ''),
+	lftm_earned_sty_unit_amt__c: replacePipe(item."LFTM_EARNED_STY_UNIT_AMT" default ''),
+	lftm_redeemed_unit_amt__c: replacePipe(item."LFTM_REDEEMED_UNIT_AMT" default ''),
+	marital_stat_cd__c: replacePipe(item."MARITAL_STAT_CD" default ''),
+	"dgst_mstr_key__c": replacePipe(item."DGST_MSTR_KEY" default ''),
+	"earning_pref_alli_cd__c": replacePipe(item."EARNING_PREF_ALLI_CD" default ''),
+	expired_pt_bal_amt__c: using(tryOutput = try(() -> item.EXPIRED_PT_BAL_AMT as Number))
+		if(tryOutput.success)tryOutput.result else null,
+	"earning_pref_alli_desc__c": replacePipe(item."EARNING_PREF_ALLI_DESC" default ''),
+	"emp_mbrshp_id__c": replacePipe(item."EMP_MBRSHP_ID" default ''),
+	ld_updt_ts__c: using(tryOutput = try(() -> ((substringBeforeLast(item."LD_UPDT_TS",":") ++ "00")) as String{format: "yyy-MM-dd HH:mm:ss.SSSSSSZ"} as DateTime{format: "yyy-MM-dd HH:mm:ss.SSSSSSZ"} as DateTime)) 
+		if (tryOutput.success) tryOutput.result else null,
+	"emp_rate_elig_ind__c": item."EMP_RATE_ELIG_IND",
+	//(YTD_TOTAL_Q_NT_QTY__c: item.YTD_TOTAL_Q_NT_QTY as Number) if((item.YTD_TOTAL_Q_NT_QTY != "") or (item.YTD_TOTAL_Q_NT_QTY != null) ),
+	Contact__c: if(item.IdVal != null) item.IdVal else null 
+	
+	
+	
+	
+})]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="b17be2dc-db07-4d55-a9c9-23bfb8001886" message='#[output json --- "second mapping" : payload]'/>
+			</route>
+		</scatter-gather>
+	</sub-flow>
+</mule>
